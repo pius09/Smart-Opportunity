@@ -1,7 +1,13 @@
 from flask import Flask
 from config import Config
 from app.extensions import db, migrate, login_manager, mail, csrf, scheduler
+import os
 
+db_url = os.environ.get('DATABASE_URL', 'sqlite:///app.db')
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 
 def create_app(config_class=Config):
     app = Flask(__name__)
