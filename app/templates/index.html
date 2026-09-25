@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+    <h1 class="display-5 fw-bold">Smart Opportunity Recommender</h1>
+    <p class="fs-5 mt-3">
+        Matching Nigerian university students to scholarships, internships, grants,
+        competitions, conferences and training opportunities they actually qualify for.
+    </p>
+    {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg mt-2">
+            Get Started <i class="bi bi-arrow-right"></i>
+        </a>
+    {% endif %}
+</div>
+{% endblock %}

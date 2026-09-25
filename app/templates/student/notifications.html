@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="mb-3">Alerts</h3>
+
+{% if not notifications %}
+  <div class="alert alert-info">
+    No notifications yet. Notifications appear when you receive a new match
+    or when a matched opportunity's deadline is approaching.
+  </div>
+{% else %}
+  <ul class="list-group">
+    {% for n in notifications %}
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between">
+          <span>{{ n.message }}</span>
+          <small class="text-muted">{{ n.sent_at.strftime('%Y-%m-%d %H:%M') }}</small>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h3>Opportunity Listings</h3>
+  <a class="btn btn-primary" href="{{ url_for('admin.new_opportunity') }}">
+    <i class="bi bi-plus-circle"></i> Add New
+  </a>
+</div>
+
+{% if not items %}
+  <div class="alert alert-info">No opportunities yet. Click "Add New" to create the first one.</div>
+{% else %}
+<table class="table table-striped align-middle">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Provider</th>
+      <th>Deadline</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for o in items %}
+    <tr>
+      <td>{{ o.title }}</td>
+      <td><span class="badge bg-secondary">{{ o.category }}</span></td>
+      <td>{{ o.provider }}</td>
+      <td>{{ o.deadline }} ({{ o.days_remaining() }}d)</td>
+      <td>
+        {% if o.days_remaining() < 0 %}
+          <span class="badge bg-secondary">Closed</span>
+        {% elif o.is_active %}
+          <span class="badge bg-success">Active</span>
+        {% else %}
+          <span class="badge bg-secondary">Inactive</span>
+        {% endif %}
+      </td>
+      <td class="text-end">
+        <a class="btn btn-sm btn-outline-primary"
+           href="{{ url_for('admin.edit_opportunity', opp_id=o.opportunity_id) }}">Edit</a>
+        <form action="{{ url_for('admin.delete_opportunity', opp_id=o.opportunity_id) }}"
+              method="POST" class="d-inline"
+              onsubmit="return confirm('Delete this opportunity?');">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn-sm btn-outline-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}

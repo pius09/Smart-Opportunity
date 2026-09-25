@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white"><h4 class="mb-0">My Profile</h4></div>
+      <div class="card-body">
+        <p class="text-muted small">
+          The more detail you provide in <strong>skills</strong> and <strong>interests</strong>,
+          the more accurate your recommendations become.
+        </p>
+        <form method="POST" novalidate>
+          {{ form.hidden_tag() }}
+          <div class="row g-3">
+            <div class="col-md-6">
+              {{ form.full_name.label(class="form-label") }}
+              {{ form.full_name(class="form-control") }}
+              {% for e in form.full_name.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-md-6">
+              {{ form.department.label(class="form-label") }}
+              {{ form.department(class="form-control", placeholder="e.g. Computer Science") }}
+              {% for e in form.department.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+              {{ form.level.label(class="form-label") }}
+              {{ form.level(class="form-select") }}
+            </div>
+            <div class="col-md-4">
+              {{ form.cgpa.label(class="form-label") }}
+              {{ form.cgpa(class="form-control", step="0.01", min="0", max="5") }}
+              {% for e in form.cgpa.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="col-md-4">
+              {{ form.location.label(class="form-label") }}
+              {{ form.location(class="form-control", placeholder="e.g. Dutse, Jigawa") }}
+            </div>
+            <div class="col-12">
+              {{ form.skills.label(class="form-label") }}
+              {{ form.skills(class="form-control", rows=3,
+                  placeholder="Python, data analysis, technical writing") }}
+            </div>
+            <div class="col-12">
+              {{ form.interests.label(class="form-label") }}
+              {{ form.interests(class="form-control", rows=3,
+                  placeholder="Artificial intelligence, renewable energy, community development") }}
+            </div>
+          </div>
+          <div class="mt-4">
+            {{ form.submit(class="btn btn-primary") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
