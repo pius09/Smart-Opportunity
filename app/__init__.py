@@ -1,9 +1,7 @@
 from flask import Flask
 from config import Config
 from app.extensions import db, migrate, login_manager, mail, csrf, scheduler
-from app import create_app
 
-app = create_app()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
